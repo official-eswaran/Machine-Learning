@@ -77,6 +77,7 @@ Predict on New Input
 📦 01 - SONAR Mine vs Rock Prediction
  ┣ 📓 mine_vs_rock_prediction.ipynb   ← Main notebook
  ┣ 📄 sonar data.csv                  ← Dataset
+ ┣ 🤖 sonar_model.pkl                 ← Saved trained model
  ┗ 📄 README.md                       ← Project documentation
 ```
 
@@ -92,7 +93,7 @@ Predict on New Input
 **Option 2 — Local Machine**
 ```bash
 # Clone the repository
-git clone https://github.com/alagarsamy-m/Machine-Learning.git
+git clone https://github.com/official-eswaran/Machine-Learning.git
 
 # Install required libraries
 pip install numpy pandas scikit-learn
@@ -119,6 +120,38 @@ if prediction[0] == 'R':
 else:
     print("The object is a Mine")
 ```
+
+---
+
+## 🤖 Saved Model
+
+The trained model is saved using `pickle` so you can **directly load and predict without retraining.**
+
+**Save the model:**
+```python
+import pickle
+pickle.dump(model, open('sonar_model.pkl', 'wb'))
+print("Model Saved Successfully!")
+```
+
+**Load and use the model:**
+```python
+import pickle
+model = pickle.load(open('sonar_model.pkl', 'rb'))
+print("Model Loaded Successfully!")
+
+# Now directly predict
+sample = sonar_data.iloc[0, 0:60].values
+input_data_reshaped = np.asarray(sample).reshape(1, -1)
+prediction = model.predict(input_data_reshaped)
+
+if prediction[0] == 'R':
+    print("The object is a Rock")
+else:
+    print("The object is a Mine")
+```
+
+> ✅ No need to retrain the model every time — just load `sonar_model.pkl` and predict directly!
 
 ---
 
